@@ -3,26 +3,21 @@
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-import functools
-import traceback
-
+import xbmc
 import xbmcgui
-
 from kodi65 import utils
+import traceback
+from functools import wraps
 
 
 class BusyHandler(object):
     """
     Class to deal with busydialog handling
     """
-
     def __init__(self, *args, **kwargs):
         self.busy = 0
         self.enabled = True
-        self.dialog = xbmcgui.DialogBusy()
+        self.dialog = None
 
     def enable(self):
         """
@@ -43,11 +38,12 @@ class BusyHandler(object):
         if not self.enabled:
             return None
         if self.busy == 0:
-            self.dialog.create()
+            xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
         self.busy += 1
 
     def set_progress(self, percent):
-        self.dialog.update(percent)
+        #self.dialog.update(percent)
+        self.dialog = None
 
     def hide_busy(self):
         """
@@ -57,13 +53,13 @@ class BusyHandler(object):
             return None
         self.busy = max(0, self.busy - 1)
         if self.busy == 0:
-            self.dialog.close()
+            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
 
     def set_busy(self, func):
         """
         Decorator to show busy dialog while function is running
         """
-        @functools.wraps(func)
+        @wraps(func)
         def decorator(cls, *args, **kwargs):
             self.show_busy()
             result = None
