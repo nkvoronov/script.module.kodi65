@@ -207,7 +207,7 @@ def format_time(time, time_format=None):
 
 def input_userrating(preselect=-1):
     index = xbmcgui.Dialog().select(heading=addon.LANG(38023),
-                                    list=[addon.LANG(10035)] + [str(i) for i in xrange(1, 11)],
+                                    list=[addon.LANG(38022)] + [str(i) for i in xrange(1, 11)],
                                     preselect=preselect)
     if index == preselect:
         return -1
