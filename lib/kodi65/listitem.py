@@ -269,18 +269,18 @@ class AudioItem(ListItem):
 
     def from_listitem(self, listitem):
         info = listitem.getAudioInfoTag()
-        self.label = listitem.getLabel().decode("utf-8")
-        self.path = info.getPath().decode("utf-8")
+        self.label = listitem.getLabel()
+        self.path = info.getPath()
         self._infos = {"dbid": info.GetDatabaseId(),
                        "mediatype": info.GetMediaType(),
-                       "title": info.GetTitle().decode("utf-8"),
+                       "title": info.GetTitle(),
                        "votes": info.GetVotes(),
                        "rating": info.GetRating(),
                        "userrating": info.GetUserRating(),
-                       "file": info.GetFile().decode("utf-8"),
-                       "comment": info.getComment().decode("utf-8"),
-                       "lyrics": info.getLyrics().decode("utf-8"),
-                       "genre": info.getGenre().decode("utf-8"),
+                       "file": info.GetFile(),
+                       "comment": info.getComment(),
+                       "lyrics": info.getLyrics(),
+                       "genre": info.getGenre(),
                        "lastplayed": info.getLastPlayed(),
                        "listeners": info.getListeners(),
                        "playcount": info.getPlayCount(),
@@ -329,16 +329,16 @@ class VideoItem(ListItem):
 
     def from_listitem(self, listitem):
         info = listitem.getVideoInfoTag()
-        self.label = listitem.getLabel().decode("utf-8")
-        self.path = info.getPath().decode("utf-8")
+        self.label = listitem.getLabel()
+        self.path = info.getPath()
         for provider in {"tmdb", "imdb", "trakt"}:
             self._ratings[provider] = listitem.getRating(provider)
         self._infos = {"dbid": info.getDbId(),
                        "mediatype": info.getMediaType(),
-                       "plot": info.getPlot().decode("utf-8"),
-                       "plotoutline": info.getPlotOutline().decode("utf-8"),
-                       "tvshowtitle": info.getTVShowTitle().decode("utf-8"),
-                       "title": info.getTitle().decode("utf-8"),
+                       "plot": info.getPlot(),
+                       "plotoutline": info.getPlotOutline(),
+                       "tvshowtitle": info.getTVShowTitle(),
+                       "title": info.getTitle(),
                        "votes": info.getVotes(),
                        "season": info.getSeason(),
                        "episode": info.getEpisode(),
@@ -346,13 +346,13 @@ class VideoItem(ListItem):
                        "userrating": info.getUserRating(),
                        "pictureurl": info.getPictureURL(),
                        "cast": info.getCast(),
-                       "file": info.getFile().decode("utf-8"),
-                       "trailer": info.getTrailer().decode("utf-8"),
-                       "originaltitle": info.getOriginalTitle().decode("utf-8"),
-                       "tagline": info.getTagLine().decode("utf-8"),
-                       "genre": info.getGenre().decode("utf-8"),
-                       "director": info.getDirector().decode("utf-8"),
-                       "writer": info.getWritingCredits().decode("utf-8"),
+                       "file": info.getFile(),
+                       "trailer": info.getTrailer(),
+                       "originaltitle": info.getOriginalTitle(),
+                       "tagline": info.getTagLine(),
+                       "genre": info.getGenre(),
+                       "director": info.getDirector(),
+                       "writer": info.getWritingCredits(),
                        "lastplayed": info.getLastPlayed(),
                        "premiered": info.getPremiered(),
                        "firstaired": info.getFirstAired(),

@@ -9,7 +9,7 @@ import xbmcgui
 from kodi65 import addon
 from kodi65 import busy
 from kodi65 import ActionHandler
-from T9Search import T9Search
+from kodi65 import T9Search
 
 ch = ActionHandler()
 
@@ -149,7 +149,7 @@ class DialogBaseList(object):
             result = xbmcgui.Dialog().input(heading=addon.LANG(16017),
                                             type=xbmcgui.INPUT_ALPHANUM)
             if result and result > -1:
-                self.search(result.decode("utf-8"))
+                self.search(result)
         else:
             T9Search(call=self.search,
                      start_value="",

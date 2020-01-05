@@ -3,7 +3,7 @@
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
-import urllib
+import urllib.parse as urllib
 import os
 import threading
 import PIL.Image
@@ -24,7 +24,7 @@ def blur(input_img, radius=25):
         return {}
     if not xbmcvfs.exists(IMAGE_PATH):
         xbmcvfs.mkdir(IMAGE_PATH)
-    input_img = utils.translate_path(urllib.unquote(input_img.encode("utf-8")))
+    input_img = utils.translate_path(urllib.unquote(input_img))
     input_img = input_img.replace("image://", "").rstrip("/")
     cachedthumb = xbmc.getCacheThumbName(input_img)
     filename = "%s-radius_%i.png" % (cachedthumb, radius)
