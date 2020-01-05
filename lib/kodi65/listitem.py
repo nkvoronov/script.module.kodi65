@@ -158,13 +158,13 @@ class ListItem(object):
         self._properties = properties
 
     def update_properties(self, properties):
-        self._properties.update({k: v for k, v in properties.iteritems() if v})
+        self._properties.update({k: v for k, v in properties.items() if v})
 
     def update_artwork(self, artwork):
-        self._artwork.update({k: v for k, v in artwork.iteritems() if v})
+        self._artwork.update({k: v for k, v in artwork.items() if v})
 
     def update_infos(self, infos):
-        self._infos.update({k: v for k, v in infos.iteritems() if v})
+        self._infos.update({k: v for k, v in infos.items() if v})
 
     def set_art(self, key, value):
         self._artwork[key] = value
@@ -191,29 +191,29 @@ class ListItem(object):
         return value if value else ""
 
     def get_artwork(self):
-        return {k: v for k, v in self._artwork.iteritems() if v}
+        return {k: v for k, v in self._artwork.items() if v}
 
     def get_infos(self):
-        return {k: v for k, v in self._infos.iteritems() if v}
+        return {k: v for k, v in self._infos.items() if v}
 
     def get_properties(self):
-        return {k: v for k, v in self._properties.iteritems() if v}
+        return {k: v for k, v in self._properties.items() if v}
 
     def get_listitem(self):
-        listitem = xbmcgui.ListItem(label=unicode(self.label) if self.label else "",
-                                    label2=unicode(self.label2) if self.label2 else "",
+        listitem = xbmcgui.ListItem(label=self.label if self.label else "",
+                                    label2=self.label2 if self.label2 else "",
                                     path=self.path)
-        props = {k: unicode(v) for k, v in self._properties.iteritems() if v}
-        infos = {k.lower(): v for k, v in self._infos.iteritems() if v}
+        props = {k: v for k, v in self._properties.items() if v}
+        infos = {k.lower(): v for k, v in self._infos.items() if v}
         infos["path"] = self.path
         if "duration" in infos:
             props['duration(h)'] = utils.format_time(infos["duration"], "h")
             props['duration(m)'] = utils.format_time(infos["duration"], "m")
-        for key, value in props.iteritems():
-            listitem.setProperty(key, unicode(value))
-        for key, value in self.specials.iteritems():
-            listitem.setProperty(key, unicode(value))
-        artwork = {k: v for k, v in self._artwork.iteritems() if v}
+        for key, value in props.items():
+            listitem.setProperty(key, value)
+        for key, value in self.specials.items():
+            listitem.setProperty(key, value)
+        artwork = {k: v for k, v in self._artwork.items() if v}
         if artwork:
             listitem.setArt(artwork)
         if infos:
@@ -228,8 +228,8 @@ class ListItem(object):
         dct = utils.merge_dicts(self.get_properties(),
                                 self.get_artwork(),
                                 self.get_infos())
-        for k, v in dct.iteritems():
-            window.setProperty('%s%s' % (prefix, k), unicode(v))
+        for k, v in dct.items():
+            window.setProperty('%s%s' % (prefix, k), v)
 
 
 class AudioItem(ListItem):

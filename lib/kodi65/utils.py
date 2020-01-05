@@ -356,8 +356,7 @@ def dict_to_windowprops(data=None, prefix="", window_id=10000):
     window = xbmcgui.Window(window_id)
     if not data:
         return None
-    for (key, value) in data.iteritems():
-        value = unicode(value)
+    for (key, value) in data.items():
         window.setProperty('%s%s' % (prefix, key), value)
 
 
@@ -442,7 +441,7 @@ def dict_to_listitems(data=None):
     itemlist = []
     for (count, result) in enumerate(data):
         listitem = xbmcgui.ListItem('%s' % (str(count)))
-        for (key, value) in result.iteritems():
+        for (key, value) in result.items():
             if not value:
                 continue
             value = unicode(value)

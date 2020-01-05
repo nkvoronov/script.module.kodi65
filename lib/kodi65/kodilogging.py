@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
-
 import logging
 import xbmc
 import xbmcaddon
@@ -42,9 +40,6 @@ class KodiLogHandler(logging.StreamHandler):
             logging.NOTSET: xbmc.LOGNONE,
         }
         if addon.bool_setting('debug'):
-            try:
-                xbmc.log(self.format(record), levels[record.levelno])
-            except UnicodeEncodeError:
                 xbmc.log(self.format(record), levels[record.levelno])
 
     def flush(self):
