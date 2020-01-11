@@ -3,7 +3,7 @@
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
-import urllib.parse as urllib
+import urllib
 import itertools
 
 from kodi65 import utils
@@ -171,7 +171,7 @@ def get_data(method, params=None, cache_days=0.5):
     """
     params = params if params else {}
     params["key"] = YT_KEY
-    params = {k: v for k, v in params.items() if v}
+    params = {k: unicode(v).encode('utf-8') for k, v in params.iteritems() if v}
     url = "{base_url}{method}?{params}".format(base_url=BASE_URL,
                                                method=method,
                                                params=urllib.urlencode(params))

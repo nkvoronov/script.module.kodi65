@@ -190,7 +190,7 @@ class T9SearchDialog(xbmcgui.WindowXMLDialog):
         result = xbmcgui.Dialog().input(heading=addon.LANG(16017),
                                         type=xbmcgui.INPUT_ALPHANUM)
         if result and result > -1:
-            self.search_str = result
+            self.search_str = result.decode("utf-8")
             self.callback(self.search_str)
             self.save_autocomplete()
 

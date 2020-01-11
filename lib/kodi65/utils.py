@@ -11,7 +11,8 @@ import datetime
 import time
 import re
 import hashlib
-import urllib.request as urllib
+import urllib
+import urllib2
 import xbmc
 import xbmcgui
 import xbmcvfs
@@ -44,8 +45,11 @@ def get_youtube_info(youtube_id):
 
 def log(*args):
     for arg in args:
+        if isinstance(arg, str):
+            arg = arg.decode("utf-8", 'ignore')
         message = u'%s: %s' % (addon.ID, arg)
-        xbmc.log(msg=message, level=xbmc.LOGDEBUG)
+        xbmc.log(msg=message.encode("utf-8", 'ignore'),
+                 level=xbmc.LOGDEBUG)
 
 
 def format_seconds(seconds):
@@ -100,7 +104,7 @@ def check_version():
 
 
 def get_skin_string(name):
-    return xbmc.getInfoLabel("Skin.String(%s)")
+    return xbmc.getInfoLabel("Skin.String(%s)").decode("utf-8")
 
 
 def set_skin_string(name, value):
@@ -247,11 +251,11 @@ def create_listitems(data=None, preload_images=0):
 
 
 def translate_path(*args):
-    return xbmc.translatePath(os.path.join(*args))
+    return xbmc.translatePath(os.path.join(*args)).decode("utf-8")
 
 
 def get_infolabel(name):
-    return xbmc.getInfoLabel(name)
+    return xbmc.getInfoLabel(name).decode("utf-8")
 
 
 def calculate_age(born, died=False):
@@ -316,7 +320,7 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False):
     get JSON response for *url, makes use of prop and file cache.
     """
     now = time.time()
-    hashed_url = hashlib.md5(url.encode('utf-8')).hexdigest()
+    hashed_url = hashlib.md5(url).hexdigest()
     cache_path = translate_path(addon.DATA_PATH, folder) if folder else translate_path(addon.DATA_PATH)
     cache_seconds = int(cache_days * 86400.0)
     if not cache_days:
@@ -356,7 +360,8 @@ def dict_to_windowprops(data=None, prefix="", window_id=10000):
     window = xbmcgui.Window(window_id)
     if not data:
         return None
-    for (key, value) in data.items():
+    for (key, value) in data.iteritems():
+        value = unicode(value)
         window.setProperty('%s%s' % (prefix, key), value)
 
 
@@ -377,9 +382,9 @@ def get_file(url):
         log("vid_cache_file Image: " + url + "-->" + vid_cache_file)
         return vid_cache_file
     try:
-        request = urllib.Request(clean_url)
+        request = urllib2.Request(clean_url)
         request.add_header('Accept-encoding', 'gzip')
-        response = urllib.urlopen(request, timeout=3)
+        response = urllib2.urlopen(request, timeout=3)
         data = response.read()
         response.close()
         log('image downloaded: ' + clean_url)
@@ -404,7 +409,7 @@ def fetch_musicbrainz_id(artist, artist_id=-1):
     uses musicbrainz.org
     """
     base_url = "http://musicbrainz.org/ws/2/artist/?fmt=json"
-    url = '&query=artist:%s' % urllib.quote_plus(artist)
+    url = '&query=artist:%s' % urllib.quote_plus(artist.encode('utf-8'))
     results = get_JSON_response(url=base_url + url,
                                 cache_days=30,
                                 folder="MusicBrainz")
@@ -441,7 +446,7 @@ def dict_to_listitems(data=None):
     itemlist = []
     for (count, result) in enumerate(data):
         listitem = xbmcgui.ListItem('%s' % (str(count)))
-        for (key, value) in result.items():
+        for (key, value) in result.iteritems():
             if not value:
                 continue
             value = unicode(value)
