@@ -130,7 +130,7 @@ class ItemList(object):
         self._properties = properties
 
     def update_properties(self, properties):
-        self._properties.update({k: v for k, v in properties.iteritems() if v})
+        self._properties.update({k: v for k, v in properties.items() if v})
 
     def set_property(self, key, value):
         self._properties[key] = value

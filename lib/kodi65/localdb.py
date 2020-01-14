@@ -205,7 +205,7 @@ class LocalDB(object):
         db_movie.set_artwork(movie['art'])
         db_movie.set_videoinfos(movie['streamdetails']["video"])
         db_movie.set_audioinfos(movie['streamdetails']["audio"])
-        stream_info = media_streamdetails(movie['file'].encode('utf-8').lower(),
+        stream_info = media_streamdetails(movie['file'].lower(),
                                           movie['streamdetails'])
         db_movie.update_properties(stream_info)
         db_movie.set_cast(movie.get("cast"))
@@ -216,9 +216,9 @@ class LocalDB(object):
         convert tvshow data to listitems
         """
         if addon.setting("infodialog_onclick") != "false":
-            path = PLUGIN_BASE + 'extendedtvinfo&&dbid=%s' % tvshow['tvshowid']
+            path = PLUGIN_BASE + "extendedtvinfo&&dbid=%s" % tvshow['tvshowid']
         else:
-            path = PLUGIN_BASE + 'action&&id=ActivateWindow(videos,videodb://tvshows/titles/%s/,return)' % tvshow['tvshowid']
+            path = PLUGIN_BASE + "action&&id=ActivateWindow(videos,videodb://tvshows/titles/%s/,return)" % tvshow['tvshowid']
         db_tvshow = VideoItem(label=tvshow.get("label"),
                               path=path)
         db_tvshow.set_infos({'title': tvshow.get('label'),
