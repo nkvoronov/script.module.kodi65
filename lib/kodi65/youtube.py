@@ -6,6 +6,7 @@
 import urllib
 import itertools
 
+from kodi65 import addon
 from kodi65 import utils
 from kodi65 import VideoItem
 from kodi65 import ItemList
@@ -170,7 +171,11 @@ def get_data(method, params=None, cache_days=0.5):
     fetch data from youtube API
     """
     params = params if params else {}
-    params["key"] = YT_KEY
+    youtube_key = addon.setting("youtube_apikey")
+    if youtube_key:
+        params["key"] = youtube_key
+    else:
+        params["key"] = YT_KEY
     params = {k: unicode(v).encode('utf-8') for k, v in params.iteritems() if v}
     url = "{base_url}{method}?{params}".format(base_url=BASE_URL,
                                                method=method,
