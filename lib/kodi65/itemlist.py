@@ -166,11 +166,14 @@ class ItemList(object):
             xbmcplugin.addSortMethod(handle, SORTS[item])
         if self.content_type:
             xbmcplugin.setContent(handle, self.content_type)
-        items = [(i.get_path(), i.get_listitem(), i.is_folder()) for i in self._items]
-        xbmcplugin.addDirectoryItems(handle=handle,
-                                     items=items,
-                                     totalItems=len(items))
-        xbmcplugin.setPluginFanart(handle, addon.FANART)
+        try:
+            items = [(i.get_path(), i.get_listitem(), i.is_folder()) for i in self._items]
+            xbmcplugin.addDirectoryItems(handle=handle,
+                                         items=items,
+                                         totalItems=len(items))
+            xbmcplugin.setPluginFanart(handle, addon.FANART)
+        except Exception, e:
+            utils.log("set_plugin_list, ERROR: (" + repr(e) + ")")
         xbmcplugin.endOfDirectory(handle)
 
     def sort(self):
