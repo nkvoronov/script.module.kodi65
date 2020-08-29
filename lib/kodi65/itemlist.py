@@ -172,7 +172,7 @@ class ItemList(object):
                                          items=items,
                                          totalItems=len(items))
             xbmcplugin.setPluginFanart(handle, addon.FANART)
-        except Exception, e:
+        except Exception as e:
             utils.log("set_plugin_list, ERROR: (" + repr(e) + ")")
         xbmcplugin.endOfDirectory(handle)
 
