@@ -11,7 +11,6 @@ from kodi65 import utils
 from kodi65 import VideoItem
 from kodi65 import ItemList
 
-YT_KEY = 'AIzaSyB-BOZ_o09NLVwq_lMskvvj1olDkFI4JK0'
 BASE_URL = "https://www.googleapis.com/youtube/v3/"
 PLUGIN_BASE = "plugin://script.extendedinfo/?info="
 
@@ -171,11 +170,7 @@ def get_data(method, params=None, cache_days=0.5):
     fetch data from youtube API
     """
     params = params if params else {}
-    youtube_key = addon.setting("youtube_apikey")
-    if youtube_key:
-        params["key"] = youtube_key
-    else:
-        params["key"] = YT_KEY
+    params["key"] = addon.setting("youtube_apikey")
     params = {k: v for k, v in params.items() if v}
     url = "{base_url}{method}?{params}".format(base_url=BASE_URL,
                                                method=method,
